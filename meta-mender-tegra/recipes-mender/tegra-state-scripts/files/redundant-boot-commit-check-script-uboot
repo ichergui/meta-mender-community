@@ -31,4 +31,12 @@ if [ "${devnam##/dev/mmcblk}" != "${devnam}" ]; then
 	exit 1
     fi
 fi
+
+otherslot=`expr 1 - $curslot`
+if ! nvbootctrl set-slot-as-unbootable $otherslot; then
+    echo "ERR: could not set slot $otherslot as unbootable" >&2
+    exit 1
+fi
+echo "Marked boot slot $otherslot as unbootable"
+
 exit 0
